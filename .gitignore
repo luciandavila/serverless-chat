@@ -77,6 +77,10 @@ dist
 # Serverless directories
 .serverless
 
+# Firebase chache files
+
+.firebase/**.cache
+
 # IDE / Editor
 .idea
 
