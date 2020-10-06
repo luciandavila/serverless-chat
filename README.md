@@ -1,3 +1,7 @@
+<p>
+  <a href="https://github.com/luciandavila/serverless-chat/actions?query=workflow%3Aci"><img alt="Serverless chat ci status" src="https://github.com/luciandavila/serverless-chat/workflows/ci/badge.svg"></a>
+</p>
+
 # serverless-chat
 
 Simple serverless chat app created with Nuxt.js, connected to google cloud tools like Firebase Authentication and Firebase Realtime Datase.
