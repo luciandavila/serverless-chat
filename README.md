@@ -8,6 +8,8 @@ Simple serverless chat app created with Nuxt.js, connected to google cloud tools
 
 The app can be accessed through the static hosting service Firebase Hosting, at <a href="https://serverless-chat-a3350.web.app/">https://serverless-chat-a3350.web.app/</a>, and offers a PWA option.
 
+This project was coded as an experiment, during my free time 😋
+
 ## Build Setup
 
 ```bash
@@ -45,7 +47,11 @@ $ yarn test
 ## Deployment
 
   ```bash
+  # install firebase cli and login
   $ curl -sL https://firebase.tools | bash
   $ firebase login
+
+  # generate and deploy code to firebase hosting service
+  $ yarn generate
   $ firebase deploy
   ```
