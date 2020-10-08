@@ -18,16 +18,6 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
-    ],
-    script: [
-      // The core Firebase JS SDK is always required and must be listed first
-      { src: '/__/firebase/7.22.1/firebase-app.js' },
-
-      // TODO: Add SDKs for Firebase products that you want to use
-      { src: '/__/firebase/7.22.1/firebase-analytics.js' },
-
-      // Initialize Firebase
-      { src: '/__/firebase/init.js' }
     ]
   },
 
@@ -55,7 +45,8 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa'
+    '@nuxtjs/pwa',
+    '@nuxtjs/firebase'
   ],
 
   // Vuetify module configuration (https://go.nuxtjs.dev/config-vuetify)
@@ -74,6 +65,23 @@ export default {
           success: colors.green.accent3
         }
       }
+    }
+  },
+
+  firebase: {
+    config: {
+      apiKey: 'AIzaSyAPlkzPZPK6avwzgNvLdyThhMw_woayw8o',
+      authDomain: 'serverless-chat-a3350.firebaseapp.com',
+      databaseURL: 'https://serverless-chat-a3350.firebaseio.com',
+      projectId: 'serverless-chat-a3350',
+      storageBucket: 'serverless-chat-a3350.appspot.com',
+      messagingSenderId: '233271123151',
+      appId: '1:233271123151:web:4956d1da928c3f3837abba',
+      measurementId: 'G-4MWSS3Q97R'
+    },
+    services: {
+      auth: true,
+      realtimeDb: true
     }
   },
 

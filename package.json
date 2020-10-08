@@ -13,8 +13,10 @@
     "test": "jest"
   },
   "dependencies": {
+    "@nuxtjs/firebase": "^6.1.1",
     "@nuxtjs/pwa": "^3.0.2",
     "core-js": "^3.6.5",
+    "firebase": "^7.22.1",
     "nuxt": "^2.14.6"
   },
   "devDependencies": {
