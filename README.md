@@ -4,7 +4,7 @@
 
 # serverless-chat
 
-🚧 WARNING: This project is still under construction, therefore it is not yet fully functional! 🚧
+🚧 **WARNING: This project is still under construction, therefore it is not yet fully functional!** 🚧
 
 Simple serverless chat app created with Nuxt.js, connected to google cloud tools like Firebase Authentication and Firebase Realtime Database.
 
