@@ -22,15 +22,24 @@
       <v-divider />
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
+          v-for="(value) in chatrooms"
+          :key="value.key"
+          :to="`/chatrooms/${value.key}`"
         >
           <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>mdi-pound</v-icon>
           </v-list-item-action>
           <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
+            <v-list-item-title v-text="value.name" />
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item to="/chatrooms/new">
+          <v-list-item-action>
+            <v-icon>mdi-plus</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="'Create Chat Room'" />
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -79,10 +88,6 @@ export default {
     copyButton: {
       type: Boolean,
       default: false
-    },
-    showDrawer: {
-      type: Boolean,
-      default: true
     }
   },
 
@@ -90,18 +95,7 @@ export default {
     return {
       drawer: true,
       alert: false,
-      items: [
-        {
-          icon: 'mdi-pound',
-          title: 'chatRoom#1',
-          to: '/chatrooms/1'
-        },
-        {
-          icon: 'mdi-plus',
-          title: 'Create Chat Room',
-          to: '/chatrooms/new'
-        }
-      ]
+      chatrooms: []
     }
   },
 
@@ -112,10 +106,23 @@ export default {
   },
 
   created () {
-    this.drawer = this.showDrawer
+    this.syncUserChatrroms()
   },
 
   methods: {
+    syncUserChatrroms () {
+      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups`).on('child_added', (snapshot) => {
+        this.$fireDb.ref(`chatrooms/${snapshot.key}`).on('value', (chatroomSnapshot) => {
+          if (chatroomSnapshot.val()) {
+            this.chatrooms.push({
+              key: snapshot.key,
+              ...chatroomSnapshot.val()
+            })
+          }
+        })
+      })
+    },
+
     copyLocation () {
       this.$refs.copyText.textContent = window.location.href
       this.$refs.copyText.select()
@@ -142,7 +149,7 @@ export default {
 }
 
 .copied.alert {
-  position: absolute;
+  position: fixed;
   z-index: 100;
   left: 50%;
   transform: translateX(-50%);
