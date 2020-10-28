@@ -33,9 +33,7 @@ export default {
 
   async created () {
     this.$fireAuth.onAuthStateChanged((user) => {
-      if (user) {
-        this.setCurrentUser(user)
-      }
+      this.setCurrentUser(user)
     })
 
     await this.$fireAuth.getRedirectResult().then((result) => {
