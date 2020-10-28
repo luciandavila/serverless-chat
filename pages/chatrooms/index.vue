@@ -56,6 +56,10 @@ export default {
     }
   },
 
+  watch: {
+    '$route.query': 'handleChatroomId'
+  },
+
   middleware ({ redirect, route }) {
     if (!route.query.id) {
       return redirect('/chatrooms/new')
@@ -63,11 +67,7 @@ export default {
   },
 
   created () {
-    this.id = this.$route.query.id
-
-    this.addUserToChatroom()
-    this.syncChatroom()
-    this.syncMessages()
+    this.handleChatroomId()
   },
 
   updated () {
@@ -75,6 +75,23 @@ export default {
   },
 
   methods: {
+    handleChatroomId () {
+      this.detachChatroomListeners()
+
+      this.id = this.$route.query.id
+
+      this.addUserToChatroom()
+      this.syncChatroom()
+      this.syncMessages()
+    },
+
+    detachChatroomListeners () {
+      if (this.id) {
+        this.$fireDb.ref(`messages/${this.id}`).off()
+        this.$fireDb.ref(`chatrooms/${this.id}`).off()
+      }
+    },
+
     addUserToChatroom () {
       this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups/${this.id}`).set(true).then(() => {
         this.$fireDb.ref(`messages/${this.id}`).push({
@@ -84,12 +101,14 @@ export default {
     },
 
     syncChatroom () {
+      this.chatroom = {}
       this.$fireDb.ref(`chatrooms/${this.id}`).on('value', (snapshot) => {
         this.chatroom = snapshot.val()
       })
     },
 
     syncMessages () {
+      this.messages = []
       this.$fireDb.ref(`messages/${this.id}`).on('child_added', (snapshot) => {
         this.messages.push({
           ...snapshot.val(),

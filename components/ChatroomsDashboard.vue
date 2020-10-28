@@ -24,7 +24,8 @@
         <v-list-item
           v-for="(value) in chatrooms"
           :key="value.key"
-          :exact="true"
+          nuxt
+          exact
           :to="`/chatrooms?id=${value.key}`"
         >
           <v-list-item-action>
