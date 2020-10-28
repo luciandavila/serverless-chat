@@ -32,7 +32,11 @@ export default {
   },
 
   async created () {
-    this.$fireAuth.onAuthStateChanged((user) => { this.setCurrentUser(user) })
+    this.$fireAuth.onAuthStateChanged((user) => {
+      if (user) {
+        this.setCurrentUser(user)
+      }
+    })
 
     await this.$fireAuth.getRedirectResult().then((result) => {
       if (result.user) {
@@ -46,6 +50,18 @@ export default {
   methods: {
     setCurrentUser (user) {
       this.$store.commit('setCurrentUser', user)
+
+      this.afterSetCurrentUser()
+    },
+
+    afterSetCurrentUser () {
+      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}`).on('value', (snapshot) => {
+        if (!snapshot.val()) {
+          this.$fireDb.ref('users').push({
+            groups: {}
+          })
+        }
+      })
     }
   }
 }
