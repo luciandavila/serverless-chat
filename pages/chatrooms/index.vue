@@ -56,8 +56,14 @@ export default {
     }
   },
 
+  middleware ({ redirect, route }) {
+    if (!route.query.id) {
+      return redirect('/chatrooms/new')
+    }
+  },
+
   created () {
-    this.id = this.$route.params.id
+    this.id = this.$route.query.id
 
     this.addUserToChatroom()
     this.syncChatroom()

@@ -24,7 +24,8 @@
         <v-list-item
           v-for="(value) in chatrooms"
           :key="value.key"
-          :to="`/chatrooms/${value.key}`"
+          :exact="true"
+          :to="`/chatrooms?id=${value.key}`"
         >
           <v-list-item-action>
             <v-icon>mdi-pound</v-icon>
