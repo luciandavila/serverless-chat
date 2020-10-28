@@ -1,8 +1,20 @@
 <template>
   <chatrooms-dashboard :title="title">
-    <div>
-      TODO: This page will be responsible for creating new chatrooms, asigning the current user to it and then rediricting him to the new room.
-    </div>
+    <v-form @submit.prevent="create">
+      <v-text-field
+        v-model="name"
+        label="Chatroom Name"
+        required
+      />
+
+      <v-btn
+        block
+        :disabled="name.length === 0"
+        @click="create"
+      >
+        Create
+      </v-btn>
+    </v-form>
   </chatrooms-dashboard>
 </template>
 
@@ -16,7 +28,18 @@ export default {
 
   data () {
     return {
-      title: 'Create Chat Room'
+      title: 'Create Chat Room',
+      name: ''
+    }
+  },
+
+  methods: {
+    create () {
+      this.$fireDb.ref('chatrooms').push({
+        name: this.name
+      }).then((snapshot) => {
+        window.location.pathname = `/chatrooms/${snapshot.key}`
+      })
     }
   },
 
