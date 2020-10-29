@@ -4,8 +4,6 @@
 
 # serverless-chat
 
-🚧 **This project is still under construction and might not work perfectly!** 🚧
-
 Simple serverless chat app created with Nuxt.js, connected to google cloud tools like Firebase Authentication and Firebase Realtime Database.
 
 The app can be accessed through the static hosting service Firebase Hosting, at <a href="https://serverless-chat-a3350.web.app/">https://serverless-chat-a3350.web.app/</a>, and can be installed as a PWA.

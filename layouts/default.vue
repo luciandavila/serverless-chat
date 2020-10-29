@@ -31,12 +31,12 @@ export default {
     }
   },
 
-  async created () {
+  created () {
     this.$fireAuth.onAuthStateChanged((user) => {
       this.setCurrentUser(user)
     })
 
-    await this.$fireAuth.getRedirectResult().then((result) => {
+    this.$fireAuth.getRedirectResult().then((result) => {
       if (result.user) {
         this.setCurrentUser(result.user)
       }
@@ -56,8 +56,12 @@ export default {
       if (!this.$store.state.currentUser) {
         return null
       }
-
+      this.detachListeners()
       this.syncChatrooms()
+    },
+
+    detachListeners () {
+      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups`).off()
     },
 
     syncChatrooms () {

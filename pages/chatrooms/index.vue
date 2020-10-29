@@ -10,7 +10,7 @@
     >
       <message
         v-if="Object.keys(messages).length === 0"
-        text="Envie a primeira mensagem"
+        text="Be the first one to say something!"
       />
       <message
         v-for="(value) in messages"
