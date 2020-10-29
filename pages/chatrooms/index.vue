@@ -51,8 +51,13 @@ export default {
       id: null,
       loadingInput: false,
       newMessage: '',
-      chatroom: {},
       messages: []
+    }
+  },
+
+  computed: {
+    chatroom () {
+      return this.$store.getters['chatrooms/getChatroomById'](this.id) || {}
     }
   },
 
@@ -81,7 +86,6 @@ export default {
       this.id = this.$route.query.id
 
       this.addUserToChatroom()
-      this.syncChatroom()
       this.syncMessages()
     },
 
@@ -93,17 +97,16 @@ export default {
     },
 
     addUserToChatroom () {
-      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups/${this.id}`).set(true).then(() => {
-        this.$fireDb.ref(`messages/${this.id}`).push({
-          message: `${this.$store.state.currentUser.displayName} has entered the chatroom.`
-        })
-      })
-    },
+      const userGroupRef = this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups/${this.id}`)
 
-    syncChatroom () {
-      this.chatroom = {}
-      this.$fireDb.ref(`chatrooms/${this.id}`).on('value', (snapshot) => {
-        this.chatroom = snapshot.val()
+      userGroupRef.on('value', (snapshot) => {
+        if (!snapshot.val()) {
+          userGroupRef.set(true).then(() => {
+            this.$fireDb.ref(`messages/${this.id}`).push({
+              message: `${this.$store.state.currentUser.displayName} has entered the chatroom.`
+            })
+          })
+        }
       })
     },
 

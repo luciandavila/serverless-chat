@@ -53,12 +53,25 @@ export default {
     },
 
     afterSetCurrentUser () {
-      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}`).on('value', (snapshot) => {
-        if (!snapshot.val()) {
-          this.$fireDb.ref('users').push({
-            groups: {}
-          })
-        }
+      if (!this.$store.state.currentUser) {
+        return null
+      }
+
+      this.syncChatrooms()
+    },
+
+    syncChatrooms () {
+      this.$store.commit('chatrooms/clear')
+
+      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups`).on('child_added', (snapshot) => {
+        this.$fireDb.ref(`chatrooms/${snapshot.key}`).on('value', (chatroomSnapshot) => {
+          if (chatroomSnapshot.val()) {
+            this.$store.commit('chatrooms/add', {
+              key: snapshot.key,
+              ...chatroomSnapshot.val()
+            })
+          }
+        })
       })
     }
   }

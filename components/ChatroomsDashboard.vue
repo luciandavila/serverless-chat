@@ -96,35 +96,21 @@ export default {
   data () {
     return {
       drawer: true,
-      alert: false,
-      chatrooms: []
+      alert: false
     }
   },
 
   computed: {
     currentUser () {
       return this.$store.state.currentUser
+    },
+
+    chatrooms () {
+      return this.$store.state.chatrooms.list
     }
   },
 
-  created () {
-    this.syncUserChatrroms()
-  },
-
   methods: {
-    syncUserChatrroms () {
-      this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups`).on('child_added', (snapshot) => {
-        this.$fireDb.ref(`chatrooms/${snapshot.key}`).on('value', (chatroomSnapshot) => {
-          if (chatroomSnapshot.val()) {
-            this.chatrooms.push({
-              key: snapshot.key,
-              ...chatroomSnapshot.val()
-            })
-          }
-        })
-      })
-    },
-
     copyLocation () {
       this.$refs.copyText.textContent = window.location.href
       this.$refs.copyText.select()
