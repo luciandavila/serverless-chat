@@ -66,6 +66,9 @@ export default {
       this.$fireDb.ref('chatrooms').push({
         name: this.name
       }).then((snapshot) => {
+        this.$fireDb.ref(`users/${this.$store.state.currentUser.uid}/groups/${snapshot.key}`).set(true)
+
+        this.name = ''
         this.loading = false
         this.lastCreatedId = snapshot.key
       })
