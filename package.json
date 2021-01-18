@@ -20,7 +20,7 @@
     "nuxt": "^2.14.7"
   },
   "devDependencies": {
-    "@nuxtjs/eslint-config": "^4.0.0",
+    "@nuxtjs/eslint-config": "^5.0.0",
     "@nuxtjs/eslint-module": "^3.0.0",
     "@nuxtjs/stylelint-module": "^4.0.0",
     "@nuxtjs/vuetify": "^1.11.2",
@@ -28,7 +28,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^26.6.1",
-    "eslint": "^7.12.1",
+    "eslint": "^7.18.0",
     "eslint-plugin-nuxt": "^1.0.0",
     "jest": "^26.6.1",
     "stylelint": "^13.7.2",
