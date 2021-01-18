@@ -15,7 +15,7 @@
   "dependencies": {
     "@nuxtjs/firebase": "^6.1.1",
     "@nuxtjs/pwa": "^3.3.4",
-    "core-js": "^3.6.5",
+    "core-js": "^3.8.2",
     "firebase": "^7.24.0",
     "nuxt": "^2.14.7"
   },
